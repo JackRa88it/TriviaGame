@@ -1,9 +1,10 @@
 // GLOBAL VARIABLES
 // -----------------------------
-// var numCorrect = 0
-// var numIncorrect = 0
-// var countdown (30 seconds)
-// var questionNum = 1
+var numCorrect = 0;
+var numIncorrect = 0;
+var intervalId;
+var count;
+var questionNum = 1;
 
 // FUNCTIONS
 // -----------------------------
@@ -20,10 +21,24 @@
     // call countdown()
 
 // function countdown()
-    // clear existing countdown
+
     // start countdown
     // update display every second
     // if timer reaches 0, call answerWrong()
+
+function startTimer() {
+    count = 30;
+    clearInterval(intervalId);
+    intervalId = setInterval(countdown, 1000);
+};
+
+function countdown() {
+    count--;
+    $("#timer").text("Time remaining: " + count + " seconds");
+    if (count == 0) {
+        answerWrong();
+    }
+};
 
 // answerRight()
     // display congratulations
@@ -40,6 +55,10 @@
         // call nextQuestion(questionNum)
     // else
         // call finish()
+function answerWrong() {
+    alert("you suck!");
+    clearInterval(intervalId);
+}
 
 // function finish()
     // clear mainContent
