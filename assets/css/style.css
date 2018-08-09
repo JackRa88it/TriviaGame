@@ -3,8 +3,11 @@ body {
 }
 
 #mainContent {
+    text-align: center;
     margin: 100px auto 0 auto;
     border: 2px solid black;
+    padding: 25px;
+    box-sizing: border-box;
     background-color: gainsboro;
     width: 960px;
 }
