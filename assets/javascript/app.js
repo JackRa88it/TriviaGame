@@ -3,7 +3,7 @@
 var numCorrect = 0;
 var numIncorrect = 0;
 var intervalID;
-var count;
+var count = 30;
 var qCount = 0;
 
 var questions = [
@@ -32,23 +32,16 @@ var questions = [
         choices: ["12 meters/second", "9 meters/second", "This question is stupid", "An African or European Swallow?"],
         answer: 3
     }
-    
 ];
 
 // FUNCTIONS
 // -----------------------------
 function initialize() {
-    numCorrect = 0;
-    numIncorrect = 0;
-    clearInterval(intervalID);
-    count = 30;
-    qCount = 0;
     $('#timer').empty();
     $('#question').empty();
     $('#response').empty();
     $('#start').attr('style', 'display:initial');
 };
-// need a START screen, so initialize() should have button to do nextQuestion()
 
 function nextQuestion(q) {
     $('#question').empty();
@@ -106,19 +99,20 @@ function answerRight() {
     var img = $('<img>');
     img.attr('src', 'assets/images/camelotDance.gif');
     $('#response').append(img);
+    numCorrect++;
     qCount++;
-    setTimeout(function() {
-        nextQuestion(qCount);
-    }, 3000);
+    if (qCount < questions.length) {
+        setTimeout(function() {
+            nextQuestion(qCount);
+        }, 3000);
+    }
+    else {
+        setTimeout(function() {
+            finish();
+        }, 3000);
+    };
 };
 
-// answerWrong()
-    // display condemnation
-    // wait 3 seconds
-    // if not last question
-        // call nextQuestion(qCount)
-    // else
-        // call finish()
 function answerWrong() {
     clearInterval(intervalID);
     $('#question').text("NOPE!");
@@ -126,16 +120,28 @@ function answerWrong() {
     var img = $('<img>');
     img.attr('src', 'assets/images/bridgeWrong.gif');
     $('#response').append(img);
+    numIncorrect++;
     qCount++;
-    setTimeout(function() {
-        nextQuestion(qCount);
-    }, 3000);
+    if (qCount < questions.length) {
+        setTimeout(function() {
+            nextQuestion(qCount);
+        }, 3000);
+    }
+    else {
+        setTimeout(function() {
+            finish();
+        }, 3000);
+    };
 };
 
-// function finish()
-    // clear mainContent
-    // display results
-    // display restart button
+
+function finish() {
+    clearInterval(intervalID);
+    $('#timer').empty();
+    $('#question').text('RESULTS:');
+    $('#response').html('Correct: ' + numCorrect + '<br>' + 'Incorrect: ' + numIncorrect + '<br><br>' + 'Would you like to try again?');
+    $('#start').attr('style', 'display:initial');
+};
 
 // CALLS
 // -----------------------------
@@ -153,5 +159,10 @@ $('#response').on('click', '.choice', function() {
 
 $('#start').on('click', function() {
     $('#start').attr('style', 'display:none');
+    numCorrect = 0;
+    numIncorrect = 0;
+    clearInterval(intervalID);
+    count = 30;
+    qCount = 0;
     nextQuestion(qCount);
 });
