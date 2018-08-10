@@ -120,18 +120,18 @@ function answerRight() {
     if (qCount < questions.length) {
         setTimeout(function() {
             nextQuestion(qCount);
-        }, 3000);
+        }, 4000);
     }
     else {
         setTimeout(function() {
             finish();
-        }, 3000);
+        }, 4000);
     };
 };
 
 function answerWrong() {
     clearInterval(intervalID);
-    $('#question').text("NOPE!");
+    $('#question').text("NOPE! the correct answer is: " + questions[qCount].choices[questions[qCount].answer]);
     $('#response').empty();
     var img = $('<img>');
     img.attr({'src':gifs[qCount].wrong, 'height':'250px'});
@@ -141,12 +141,12 @@ function answerWrong() {
     if (qCount < questions.length) {
         setTimeout(function() {
             nextQuestion(qCount);
-        }, 3000);
+        }, 4000);
     }
     else {
         setTimeout(function() {
             finish();
-        }, 3000);
+        }, 4000);
     };
 };
 
