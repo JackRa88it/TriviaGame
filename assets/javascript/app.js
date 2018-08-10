@@ -34,6 +34,29 @@ var questions = [
     }
 ];
 
+var gifs = [
+    {
+        right: 'assets/images/camelotDance.gif',
+        wrong: 'assets/images/bridgeWrong.gif'
+    },
+    {
+        right: 'assets/images/camelotDance.gif',
+        wrong: 'assets/images/insultingFrenchman.gif'
+    },
+    {
+        right: 'assets/images/prisonerClapping.gif',
+        wrong: 'assets/images/youMakeMeSad.gif'
+    },
+    {
+        right: 'assets/images/comePatsy.gif',
+        wrong: 'assets/images/holyGrailRabbit.gif'
+    },
+    {
+        right: 'assets/images/bridgeRight.gif',
+        wrong: 'assets/images/bridgeWrong.gif'
+    }
+];
+
 // FUNCTIONS
 // -----------------------------
 function initialize() {
@@ -85,19 +108,12 @@ function countdown() {
     };
 };
 
-// answerRight()
-    // display congratulations
-    // wait 3 seconds
-    // if not last question
-        // call nextQuestion(qCount)
-    // else
-        // call finish()
 function answerRight() {
     clearInterval(intervalID);
     $('#question').text("CORRECT!");
     $('#response').empty();
     var img = $('<img>');
-    img.attr('src', 'assets/images/camelotDance.gif');
+    img.attr({'src':gifs[qCount].right, 'height':'250px'});
     $('#response').append(img);
     numCorrect++;
     qCount++;
@@ -118,7 +134,7 @@ function answerWrong() {
     $('#question').text("NOPE!");
     $('#response').empty();
     var img = $('<img>');
-    img.attr('src', 'assets/images/bridgeWrong.gif');
+    img.attr({'src':gifs[qCount].wrong, 'height':'250px'});
     $('#response').append(img);
     numIncorrect++;
     qCount++;
@@ -133,7 +149,6 @@ function answerWrong() {
         }, 3000);
     };
 };
-
 
 function finish() {
     clearInterval(intervalID);

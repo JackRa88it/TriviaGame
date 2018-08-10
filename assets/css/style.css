@@ -1,13 +1,45 @@
 body {
-
+    background-image: url('../images/old-castle-32.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'IM Fell English', serif;
 }
 
 #mainContent {
     text-align: center;
     margin: 100px auto 0 auto;
-    border: 2px solid black;
-    padding: 25px;
+    padding: 90px 40px;
     box-sizing: border-box;
-    background-color: gainsboro;
+    background-image: url('../images/parchment_alpha.png');
+    background-size: 100% 100%;
     width: 960px;
+    height: 600px;
 }
+
+#title {
+    font-size: 38px;
+    color: rgb(126, 19, 0);
+}
+
+#timer,
+#question,
+#response {
+    font-size: 32px;
+}
+
+button {
+    text-align: center;
+    border: 2px solid black;
+    background: none;
+    font-family: 'IM Fell English', serif;
+    font-size: 24px;
+    padding-top: 5px;
+    margin: 5px;
+}
+
+button:hover {
+    border-color: rgb(126, 19, 0);
+    color: rgb(126, 19, 0); 
+}
+
+
