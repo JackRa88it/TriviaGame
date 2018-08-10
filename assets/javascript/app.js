@@ -33,7 +33,7 @@ var questions = [
         answer: 3
     }
     
-]
+];
 
 // FUNCTIONS
 // -----------------------------
@@ -43,53 +43,41 @@ function initialize() {
     clearInterval(intervalID);
     count = 30;
     qCount = 0;
-    nextQuestion(qCount);
+    $('#timer').empty();
+    $('#question').empty();
+    $('#response').empty();
+    $('#start').attr('style', 'display:initial');
 };
+// need a START screen, so initialize() should have button to do nextQuestion()
 
-// function nextQuestion()
-    // clear mainContent
-    // make div for time remaining
-    // make div for question
-    // make div for radio buttons
-    // qCount++
-    // call countdown()
 function nextQuestion(q) {
-    $('#display').empty();
+    $('#question').empty();
+    $('#response').empty();
     count = 30;
 
-    var timer = $('<div>');
-    timer.attr('id', 'timer');
-    timer.text("Time remaining: " + count + " seconds");
+    $('#timer').text("Time remaining: " + count + " seconds");
 
-    var question = $('<div>');
-    question.attr('id', 'question');
-    question.text(questions[q].question);
+    $('#question').text(questions[q].question);
 
     var button0 = $('<button>');
-    button0.attr({'id':'button0', 'value':0});
+    button0.attr({'class':'choice', 'value':0});
     button0.text(questions[q].choices[0]);
 
     var button1 = $('<button>');
-    button1.attr({'id':'button1', 'value':1});
+    button1.attr({'class':'choice', 'value':1});
     button1.text(questions[q].choices[1]);
 
     var button2 = $('<button>');
-    button2.attr({'id':'button2', 'value':2});
+    button2.attr({'class':'choice', 'value':2});
     button2.text(questions[q].choices[2]);
 
     var button3 = $('<button>');
-    button3.attr({'id':'button3', 'value':3});
+    button3.attr({'class':'choice', 'value':3});
     button3.text(questions[q].choices[3]);
 
-    $('#display').append(timer, question, button0, button1, button2, button3);
+    $('#response').append(button0, '<br>', button1, '<br>', button2, '<br>', button3);
     startTimer();
-}
-
-// function countdown()
-
-    // start countdown
-    // update display every second
-    // if timer reaches 0, call answerWrong()
+};
 
 function startTimer() {
     clearInterval(intervalID);
@@ -101,7 +89,7 @@ function countdown() {
     $("#timer").text("Time remaining: " + count + " seconds");
     if (count == 0) {
         answerWrong();
-    }
+    };
 };
 
 // answerRight()
@@ -111,6 +99,18 @@ function countdown() {
         // call nextQuestion(qCount)
     // else
         // call finish()
+function answerRight() {
+    clearInterval(intervalID);
+    $('#question').text("CORRECT!");
+    $('#response').empty();
+    var img = $('<img>');
+    img.attr('src', 'assets/images/camelotDance.gif');
+    $('#response').append(img);
+    qCount++;
+    setTimeout(function() {
+        nextQuestion(qCount);
+    }, 3000);
+};
 
 // answerWrong()
     // display condemnation
@@ -120,9 +120,17 @@ function countdown() {
     // else
         // call finish()
 function answerWrong() {
-    alert("you suck!");
     clearInterval(intervalID);
-}
+    $('#question').text("NOPE!");
+    $('#response').empty();
+    var img = $('<img>');
+    img.attr('src', 'assets/images/bridgeWrong.gif');
+    $('#response').append(img);
+    qCount++;
+    setTimeout(function() {
+        nextQuestion(qCount);
+    }, 3000);
+};
 
 // function finish()
     // clear mainContent
@@ -131,13 +139,19 @@ function answerWrong() {
 
 // CALLS
 // -----------------------------
-// initialize()
+initialize()
 
-// submit.on(click)
-    // if answer correct
-        // call answerRight()
-    // else
-        // call answerWrong()
+$('#response').on('click', '.choice', function() {
+    var answer = this.value;
+    if (answer == questions[qCount].answer) {
+        answerRight();
+    }
+    else {
+        answerWrong();
+    };
+});
 
-// restart.on(click)
-    // call initialize()
+$('#start').on('click', function() {
+    $('#start').attr('style', 'display:none');
+    nextQuestion(qCount);
+});
